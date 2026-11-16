@@ -1,90 +1,158 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Camera Preview Demo App</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="cph-content" [fullscreen]="true" [scrollY]="false">
+  <!-- Measures the top safe-area inset; never visible. -->
+  <div #probe class="cph-probe" aria-hidden="true"></div>
 
-<ion-content id="content" class="content-camera-preview" [fullscreen]="true">
-  @if (!cameraActive) {
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Camera Preview Demo App</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- The web implementation appends its <video> here; unused on Android and iOS. -->
+  <div class="cph-web-preview" [id]="webParentId"></div>
 
-  <ion-card class="start-card">
-    <ion-card-content>
-      <ion-button
-        expand="block"
-        color="primary"
-        class="action-button"
-        (click)="showRearCameraPreview()"
-      >
-        Start Rear Camera
-      </ion-button>
-
-      <ion-button
-        expand="block"
-        color="secondary"
-        class="action-button"
-        (click)="showFrontCameraPreview()"
-      >
-        Start Front Camera
-      </ion-button>
-
-      <div class="partial-mode">
-        <ion-checkbox label-placement="end" [(ngModel)]="partialMode">
-          Partial preview
-        </ion-checkbox>
-      </div>
-    </ion-card-content>
-  </ion-card>
-  } @else {
-  <div slot="fixed" class="camera-status" aria-live="polite">
-    <div>{{ startStatus }}</div>
-
-    @if (readyStatus) {
-    <div>{{ readyStatus }}</div>
-    }
-
-    @if (actionStatus) {
-    <div>{{ actionStatus }}</div>
-    }
-  </div>
-
-  @if (imageData) {
-  <img
-    slot="fixed"
-    alt="Captured photo"
-    class="captured-photo"
-    [src]="imageData"
-  />
+  @if (ui.backdrop(); as color) {
+    <div class="cph-backdrop" aria-hidden="true" data-testid="backdrop" [style.background]="color"></div>
   }
 
-  <div slot="fixed" class="camera-controls">
-    <ion-button
-      color="warning"
-      [disabled]="capturePending || stopPending"
-      (click)="takePhoto()"
+  @if (guide(); as outline) {
+    <div
+      class="cph-guide"
+      aria-hidden="true"
+      data-testid="guide"
+      [style.left.px]="outline.rect.x"
+      [style.top.px]="outline.rect.y"
+      [style.width.px]="outline.rect.width"
+      [style.height.px]="outline.rect.height"
     >
-      Take Photo
-    </ion-button>
+      <span class="cph-guide-label">{{ outline.label }}</span>
+    </div>
+  }
 
-    <ion-button
-      color="success"
-      [disabled]="capturePending || stopPending"
-      (click)="flip()"
-    >
-      Flip
-    </ion-button>
+  <div
+    class="cph-shell"
+    data-testid="shell"
+    [class.cph-shell-live]="harness.sessionActive()"
+    [class.cph-shell-band]="ui.shellBand() !== null"
+    [class.cph-shell-peek]="ui.peek()"
+    [class.cph-shell-hidden]="ui.chromeHidden()"
+    [style.top.px]="ui.shellBand()?.top ?? null"
+    [style.height.px]="ui.shellBand()?.height ?? null"
+  >
+    <header class="cph-top">
+      <div class="cph-titlebar">
+        <h1 class="cph-title">Camera Preview</h1>
+        <span class="cph-tag" data-testid="platform">{{ harness.platform }}</span>
+        <span class="cph-spacer"></span>
+        <button
+          type="button"
+          class="cph-btn cph-btn-small"
+          data-testid="peek"
+          [disabled]="!harness.sessionActive()"
+          (click)="ui.peek.set(true)"
+        >
+          Peek
+        </button>
+        <button type="button" class="cph-btn cph-btn-small" data-testid="reset" (click)="reset()">Reset</button>
+      </div>
 
-    <ion-button
-      color="danger"
-      [disabled]="capturePending || stopPending"
-      (click)="stop()"
-    >
-      Stop
-    </ion-button>
+      <div class="cph-status" aria-live="polite" data-testid="status">
+        <span class="cph-state" [attr.data-state]="harness.session()">{{ harness.session() }}</span>
+        <span data-testid="status-ready">{{ readyText() }}</span>
+        @if (harness.pendingCount() > 0) {
+          <span>{{ harness.pendingCount() }} pending</span>
+        }
+        @if (harness.autoStopIn(); as seconds) {
+          <span class="cph-status-warn">auto-stop in {{ seconds }} s</span>
+        }
+        <span class="cph-status-last" data-testid="status-last">{{ lastCallText() }}</span>
+      </div>
+
+      <nav class="cph-tabs" aria-label="Harness panels">
+        @for (item of panels; track item.id) {
+          <button
+            type="button"
+            class="cph-tab"
+            [class.cph-on]="ui.panel() === item.id"
+            [attr.aria-current]="ui.panel() === item.id ? 'page' : null"
+            [attr.data-testid]="'tab-' + item.id"
+            (click)="ui.panel.set(item.id)"
+          >
+            {{ item.label }}
+          </button>
+        }
+      </nav>
+    </header>
+
+    <main class="cph-panel" data-testid="panel">
+      @switch (ui.panel()) {
+        @case ('configure') {
+          <app-config-panel />
+        }
+        @case ('live') {
+          <app-live-panel />
+        }
+        @case ('results') {
+          <app-result-panel />
+        }
+        @case ('log') {
+          <app-log-panel />
+        }
+        @case ('lab') {
+          <app-lab-panel />
+        }
+        @case ('coverage') {
+          <app-coverage-panel />
+        }
+      }
+    </main>
+
+    <footer #dock class="cph-dock" data-testid="dock">
+      @if (harness.session() === 'failed') {
+        <button type="button" class="cph-btn cph-btn-danger" data-testid="dock-reset" (click)="reset()">
+          Stop and reset
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="cph-btn cph-btn-primary"
+          data-testid="dock-start"
+          [disabled]="harness.isPending('start') || harness.isPending('stop')"
+          (click)="start()"
+        >
+          {{ harness.sessionActive() ? 'Restart' : 'Start' }}
+        </button>
+      }
+      <button
+        type="button"
+        class="cph-btn cph-btn-danger"
+        data-testid="dock-stop"
+        [disabled]="harness.isPending('stop')"
+        (click)="stop()"
+      >
+        Stop
+      </button>
+      <button
+        type="button"
+        class="cph-btn"
+        data-testid="dock-capture"
+        [disabled]="harness.isPending('capture')"
+        (click)="capture()"
+      >
+        Capture
+      </button>
+      <button
+        type="button"
+        class="cph-btn"
+        data-testid="dock-sample"
+        [disabled]="harness.isPending('captureSample')"
+        (click)="sample()"
+      >
+        Sample
+      </button>
+      <button type="button" class="cph-btn" data-testid="dock-flip" [disabled]="harness.isPending('flip')" (click)="flip()">
+        Flip
+      </button>
+    </footer>
   </div>
+
+  @if (ui.peek() && !ui.chromeHidden()) {
+    <button type="button" class="cph-peek-chip" data-testid="peek-chip" (click)="ui.peek.set(false)">
+      Show controls
+    </button>
   }
 </ion-content>

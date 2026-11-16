@@ -1,0 +1,82 @@
+@if (harness.lastImage(); as image) {
+  <section class="cph-section">
+    <h2 class="cph-h">
+      Image
+      <span class="cph-tag">{{ image.diagnostics.method }}() #{{ image.diagnostics.callId }}</span>
+    </h2>
+    @if (image.objectUrl) {
+      <div class="cph-viewer" [class.cph-viewer-actual]="zoom() === 'actual'">
+        <img
+          class="cph-viewer-img"
+          alt="Last captured image, shown uncropped"
+          data-testid="result-image"
+          [src]="image.objectUrl"
+          (load)="onImageLoad($event)"
+        />
+      </div>
+      <div class="cph-actions cph-actions-start">
+        <button type="button" class="cph-btn" (click)="toggleZoom()">
+          {{ zoom() === 'fit' ? 'Show at 100 %' : 'Fit to panel' }}
+        </button>
+        <button type="button" class="cph-btn" (click)="clear()">Clear results</button>
+      </div>
+    }
+    <dl class="cph-facts" data-testid="result-facts">
+      @for (row of rows(); track row.label) {
+        <div class="cph-fact" [class.cph-fact-warn]="row.warn">
+          <dt>{{ row.label }}</dt>
+          <dd>{{ row.value }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+} @else {
+  <section class="cph-section">
+    <h2 class="cph-h">Image</h2>
+    <p class="cph-hint">No capture or sample yet. Use Capture or Sample in the dock.</p>
+  </section>
+}
+
+@if (harness.lastVideo(); as video) {
+  <section class="cph-section">
+    <h2 class="cph-h">
+      Recording <span class="cph-tag">delivered by {{ video.deliveredBy }}() #{{ video.callId }}</span>
+    </h2>
+    <video
+      class="cph-video"
+      controls
+      playsinline
+      preload="metadata"
+      data-testid="result-video"
+      [src]="video.webViewUrl"
+      (loadedmetadata)="onVideoMeta($event)"
+      (error)="onVideoError()"
+    ></video>
+    <dl class="cph-facts">
+      <div class="cph-fact">
+        <dt>Returned path</dt>
+        <dd>{{ video.path }}</dd>
+      </div>
+      <div class="cph-fact">
+        <dt>WebView URL</dt>
+        <dd>{{ video.webViewUrl }}</dd>
+      </div>
+      @if (videoMeta(); as meta) {
+        <div class="cph-fact">
+          <dt>Duration</dt>
+          <dd>{{ meta.duration.toFixed(2) }} s</dd>
+        </div>
+        <div class="cph-fact">
+          <dt>Video size</dt>
+          <dd>{{ meta.width }} × {{ meta.height }}</dd>
+        </div>
+      }
+      @if (videoError(); as error) {
+        <div class="cph-fact cph-fact-warn">
+          <dt>Playback</dt>
+          <dd>{{ error }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+}

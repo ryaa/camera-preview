@@ -14,6 +14,7 @@ log.txt
 
 
 /.sourcemaps
+/e2e/out
 /.versions
 /coverage
 

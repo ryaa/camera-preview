@@ -6,6 +6,7 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -24,6 +25,9 @@
     ],
     "useDefineForClassFields": false
   },
+  /* ESLint builds its program from this file with allowJs on, so generated bundles under the
+     native projects (after `cap sync` or a native build) must not be part of it. */
+  "exclude": ["node_modules", "www", "android", "ios", "coverage", "e2e"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

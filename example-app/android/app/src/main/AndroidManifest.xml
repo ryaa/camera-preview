@@ -40,4 +40,9 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- Video recording with audio (startRecordVideo). MODIFY_AUDIO_SETTINGS is requested together
+         with RECORD_AUDIO by Capacitor when the page asks for the microphone. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
 </manifest>

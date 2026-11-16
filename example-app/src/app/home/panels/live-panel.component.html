@@ -1,0 +1,303 @@
+<section class="cph-section">
+  <h2 class="cph-h">capture() <app-support-badge item="capture" /></h2>
+  <div class="cph-grid">
+    <div class="cph-cell">
+      <app-number-field
+        label="quality"
+        testId="capture-quality"
+        [min]="0"
+        [max]="100"
+        [field]="ui.captureForm().quality"
+        (fieldChange)="setCaptureField('quality', $event)"
+      />
+      <app-support-badge item="capture.quality" [compact]="true" />
+    </div>
+    <div class="cph-cell">
+      <app-number-field
+        label="width"
+        testId="capture-width"
+        [field]="ui.captureForm().width"
+        (fieldChange)="setCaptureField('width', $event)"
+      />
+      <app-support-badge item="capture.width" [compact]="true" />
+    </div>
+    <div class="cph-cell">
+      <app-number-field
+        label="height"
+        testId="capture-height"
+        [field]="ui.captureForm().height"
+        (fieldChange)="setCaptureField('height', $event)"
+      />
+      <app-support-badge item="capture.height" [compact]="true" />
+    </div>
+  </div>
+  <div class="cph-actions">
+    <code class="cph-inline-json">capture({{ captureJson() }})</code>
+    <button
+      type="button"
+      class="cph-btn cph-btn-primary"
+      data-testid="live-capture"
+      [disabled]="harness.isPending('capture')"
+      (click)="capture()"
+    >
+      Capture
+    </button>
+  </div>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">captureSample() <app-support-badge item="captureSample" /></h2>
+  <div class="cph-grid">
+    <div class="cph-cell">
+      <app-number-field
+        label="quality"
+        testId="sample-quality"
+        [min]="0"
+        [max]="100"
+        [field]="ui.sampleForm().quality"
+        (fieldChange)="setSampleQuality($event)"
+      />
+      <app-support-badge item="captureSample.quality" [compact]="true" />
+    </div>
+    <div class="cph-cell">
+      <app-number-field
+        label="repeat every (ms)"
+        [min]="50"
+        [step]="50"
+        [field]="samplingInterval()"
+        (fieldChange)="samplingInterval.set($event)"
+      />
+    </div>
+  </div>
+  <div class="cph-actions">
+    <code class="cph-inline-json">captureSample({{ sampleJson() }})</code>
+    <button type="button" class="cph-btn" data-testid="live-sampling" (click)="toggleSampling()">
+      {{ harness.sampling() ? 'Stop repeating' : 'Repeat' }}
+    </button>
+    <button
+      type="button"
+      class="cph-btn cph-btn-primary"
+      data-testid="live-sample"
+      [disabled]="harness.isPending('captureSample')"
+      (click)="sample()"
+    >
+      Sample
+    </button>
+  </div>
+  @if (harness.sampling(); as totals) {
+    <p class="cph-hint" aria-live="polite">
+      Repeating: {{ totals.ok }} resolved, {{ totals.failed }} not resolved. Individual samples are not logged.
+    </p>
+  }
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Flash <app-support-badge item="setFlashMode" /></h2>
+  <div class="cph-actions cph-actions-start">
+    <button
+      type="button"
+      class="cph-btn"
+      data-testid="flash-query"
+      [disabled]="harness.isPending('getSupportedFlashModes')"
+      (click)="queryFlash()"
+    >
+      getSupportedFlashModes()
+    </button>
+    <span class="cph-hint">
+      @if (harness.flashModes(); as modes) {
+        Reported: {{ modes.length ? modes.join(', ') : 'none (no flash unit)' }}
+      } @else {
+        Not queried yet — every declared mode is offered.
+      }
+    </span>
+  </div>
+  <div class="cph-chips">
+    @for (mode of flashChoices(); track mode) {
+      <button type="button" class="cph-chip" [attr.data-testid]="'flash-' + mode" (click)="setFlash(mode)">
+        {{ mode }}
+      </button>
+    }
+    <button
+      type="button"
+      class="cph-chip cph-chip-quiet"
+      data-testid="flash-unsupported"
+      (click)="setFlash(unsupportedFlashMode)"
+    >
+      {{ unsupportedFlashMode }} (not a mode — expect a rejection)
+    </button>
+  </div>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">setOpacity() <app-support-badge item="setOpacity" /></h2>
+  <div class="cph-row">
+    <input
+      type="range"
+      class="cph-range"
+      min="0"
+      max="1"
+      step="0.05"
+      aria-label="opacity"
+      [value]="ui.opacityForm().opacity.value ?? 1"
+      (input)="setOpacityFromRange($event)"
+    />
+  </div>
+  <div class="cph-grid">
+    <div class="cph-cell">
+      <app-number-field
+        label="opacity"
+        testId="opacity-value"
+        [min]="0"
+        [max]="1"
+        step="0.05"
+        [field]="ui.opacityForm().opacity"
+        (fieldChange)="setOpacityField($event)"
+      />
+      <app-support-badge item="setOpacity.opacity" [compact]="true" />
+    </div>
+  </div>
+  <div class="cph-actions">
+    <code class="cph-inline-json">setOpacity({{ opacityJson() }})</code>
+    <button
+      type="button"
+      class="cph-btn cph-btn-primary"
+      data-testid="live-opacity"
+      [disabled]="harness.isPending('setOpacity')"
+      (click)="applyOpacity()"
+    >
+      Apply
+    </button>
+  </div>
+  <p class="cph-hint">Needs enableOpacity at start() on Android. The call is given 3 s to settle.</p>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">
+    Recording <app-support-badge item="startRecordVideo" [showNote]="false" />
+    <span class="cph-tag">{{ harness.recording() }}</span>
+  </h2>
+  <div class="cph-grid">
+    <div class="cph-cell">
+      <label class="cph-text">
+        <input
+          type="checkbox"
+          [checked]="ui.recordForm().position.send"
+          (change)="setRecordPositionSend($event)"
+          aria-label="Send position"
+        />
+        <span class="cph-label">position</span>
+        <input
+          type="text"
+          class="cph-text-input"
+          aria-label="recording position"
+          [value]="ui.recordForm().position.value"
+          (input)="setRecordPositionValue($event)"
+        />
+      </label>
+      <app-support-badge item="startRecordVideo.position" [compact]="true" />
+    </div>
+    <div class="cph-cell">
+      <app-number-field
+        label="width"
+        [field]="ui.recordForm().width"
+        (fieldChange)="setRecordNumber('width', $event)"
+      />
+      <app-support-badge item="startRecordVideo.width" [compact]="true" />
+    </div>
+    <div class="cph-cell">
+      <app-number-field
+        label="height"
+        [field]="ui.recordForm().height"
+        (fieldChange)="setRecordNumber('height', $event)"
+      />
+      <app-support-badge item="startRecordVideo.height" [compact]="true" />
+    </div>
+    <div class="cph-cell">
+      <app-number-field
+        label="maxDuration (ms)"
+        testId="record-max-duration"
+        [min]="0"
+        [step]="500"
+        [field]="ui.recordForm().maxDuration"
+        (fieldChange)="setRecordNumber('maxDuration', $event)"
+      />
+      <app-support-badge item="startRecordVideo.maxDuration" [compact]="true" />
+    </div>
+  </div>
+  <div class="cph-row cph-row-wrap">
+    <span class="cph-label">withFlash</span>
+    <app-tri-toggle label="withFlash" [value]="ui.recordForm().withFlash" (valueChange)="setRecordFlash($event)" />
+    <span class="cph-row-note"><app-support-badge item="startRecordVideo.withFlash" [compact]="true" /></span>
+  </div>
+  <div class="cph-actions">
+    <code class="cph-inline-json">startRecordVideo({{ recordJson() }})</code>
+    <button
+      type="button"
+      class="cph-btn cph-btn-primary"
+      data-testid="record-start"
+      [disabled]="harness.recording() !== 'idle'"
+      (click)="startRecording()"
+    >
+      Start recording
+    </button>
+    <button
+      type="button"
+      class="cph-btn"
+      data-testid="record-stop"
+      [disabled]="harness.isPending('stopRecordVideo')"
+      (click)="stopRecording()"
+    >
+      Stop recording
+    </button>
+  </div>
+  <p class="cph-hint">
+    Recording opens the microphone unless audio is disabled on platforms that honour it. The plugin does not ask for
+    the permission, so grant it first.
+  </p>
+  <button type="button" class="cph-btn" data-testid="request-microphone" (click)="requestMicrophone()">
+    Request microphone permission
+  </button>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Readiness and lifecycle <app-support-badge item="isCameraStarted" /></h2>
+  <div class="cph-actions cph-actions-start">
+    <button
+      type="button"
+      class="cph-btn"
+      data-testid="live-ready"
+      [disabled]="harness.isPending('isCameraStarted')"
+      (click)="checkReady()"
+    >
+      isCameraStarted() now
+    </button>
+  </div>
+  <ol class="cph-steps">
+    <li>
+      <strong>Background and resume.</strong> Start a preview, press Home, return to the app. The log should show
+      readiness going to false, then back to true, with no new start().
+    </li>
+    <li>
+      <strong>Rotation.</strong> Rotate the device with lockAndroidOrientation false and then true, and compare the
+      preview with the outlined rectangle each time.
+    </li>
+    <li>
+      <strong>Zoom and focus.</strong> With enableZoom true and the preview in front of the page, pinch inside it and
+      tap to focus. Take a sample before and after to compare magnification.
+    </li>
+  </ol>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Permissions</h2>
+  <ol class="cph-steps">
+    <li>
+      Deny the camera prompt once: start() should reject with a permission message, and the app should stay usable.
+    </li>
+    <li>
+      Deny it twice: the prompt stops appearing. Re-enable the permission in the system settings (or
+      <code>adb shell pm revoke</code> / <code>pm grant</code>), then press Start again without relaunching.
+    </li>
+    <li>The same applies to the microphone for recording.</li>
+  </ol>
+</section>

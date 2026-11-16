@@ -1,0 +1,1417 @@
+{
+ "A": {
+  "isCameraStarted:before": {
+   "outcome": "resolved",
+   "result": {
+    "value": false
+   }
+  },
+  "start": {
+   "outcome": "resolved"
+  },
+  "isCameraStarted:after": {
+   "outcome": "resolved",
+   "result": {
+    "value": true
+   }
+  },
+  "start:duplicate": {
+   "outcome": "rejected",
+   "error": "camera already started"
+  },
+  "getSupportedFlashModes": {
+   "outcome": "resolved",
+   "result": {
+    "result": [
+     "off",
+     "auto",
+     "on",
+     "torch"
+    ]
+   }
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  },
+  "isCameraStarted:afterStop": {
+   "outcome": "resolved",
+   "result": {
+    "value": false
+   }
+  },
+  "stop:again": {
+   "outcome": "rejected",
+   "error": "camera already stopped"
+  }
+ },
+ "B": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "C": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "getSupportedFlashModes": {
+   "outcome": "resolved",
+   "result": {
+    "result": [
+     "off",
+     "auto",
+     "on",
+     "torch",
+     "red-eye"
+    ]
+   }
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1600x1200",
+    "displayed": "1600x1200",
+    "hasExif": true,
+    "orientation": 1
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1440x1920",
+    "displayed": "1440x1920",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "D": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1200x1600",
+    "displayed": "1200x1600",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1440x1920",
+    "displayed": "1440x1920",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "E": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "E2": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "F1": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "measuredRectDp": {
+   "x": 40,
+   "y": 120,
+   "width": 300,
+   "height": 200
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "aspectDeltaPercent": {
+   "capture": -50,
+   "sample": -50
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "F2": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "measuredRectDp": {
+   "x": 24,
+   "y": 96,
+   "width": 160,
+   "height": 280
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "720x1280",
+    "displayed": "720x1280",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "720x1280",
+    "displayed": "720x1280",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "aspectDeltaPercent": {
+   "capture": -1.6,
+   "sample": -1.6
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "G": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "/data/user/0/ryltsov.alex.camera.preview.demo/cache/cpcp_capture_<id>.jpg"
+   },
+   "image": {
+    "kind": "file",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "H": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture:no-size": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:640x480": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "480x640",
+    "displayed": "480x640",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:width-only": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:height-only": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:480x640": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "480x640",
+    "displayed": "480x640",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:4000x3000": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:negative-size": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "120x160",
+    "displayed": "120x160",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:quality-20": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:quality-100": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:quality-0": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "capture:quality-101": {
+   "outcome": "rejected",
+   "error": "failed to take picture: RuntimeException: setParameters failed"
+  },
+  "capture:quality--1": {
+   "outcome": "rejected",
+   "error": "failed to take picture: RuntimeException: setParameters failed"
+  },
+  "capture:quality-omitted": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample:quality-20": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "captureSample:quality-100": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1392x1856",
+    "displayed": "1392x1856",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "I": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "getSupportedFlashModes": {
+   "outcome": "resolved",
+   "result": {
+    "result": [
+     "off",
+     "auto",
+     "on",
+     "torch"
+    ]
+   }
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "L1": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "setOpacity": {
+   "outcome": "unsettled"
+  },
+  "capture:after": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "L2": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "setOpacity": {
+   "outcome": "unsettled"
+  },
+  "capture:after": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "M": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "getSupportedFlashModes": {
+   "outcome": "resolved",
+   "result": {
+    "result": [
+     "off",
+     "auto",
+     "on",
+     "torch"
+    ]
+   }
+  },
+  "setFlashMode:off": {
+   "outcome": "resolved"
+  },
+  "setFlashMode:auto": {
+   "outcome": "resolved"
+  },
+  "setFlashMode:on": {
+   "outcome": "resolved"
+  },
+  "setFlashMode:torch": {
+   "outcome": "resolved"
+  },
+  "setFlashMode:strobe": {
+   "outcome": "rejected",
+   "error": "Flash mode not recognised: strobe"
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "N": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "P": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "measuredRectDp": {
+   "x": 20,
+   "y": 60,
+   "width": 406.7,
+   "height": 300
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "J": {
+  "duplicate-start": {
+   "groups": [
+    {
+     "name": "duplicate-start",
+     "calls": [
+      {
+       "label": "start#1",
+       "outcome": "resolved",
+       "error": null
+      },
+      {
+       "label": "start#2",
+       "outcome": "rejected",
+       "error": "camera already started"
+      }
+     ]
+    }
+   ],
+   "checks": {
+    "isCameraStarted": true
+   }
+  },
+  "overlapping-capture": {
+   "groups": [
+    {
+     "name": "overlapping-capture",
+     "calls": [
+      {
+       "label": "capture#1",
+       "outcome": "resolved",
+       "error": null
+      },
+      {
+       "label": "capture#2",
+       "outcome": "rejected",
+       "error": "A capture is already in progress"
+      }
+     ]
+    }
+   ],
+   "checks": {}
+  },
+  "overlapping-sample": {
+   "groups": [
+    {
+     "name": "overlapping-sample",
+     "calls": [
+      {
+       "label": "sample#1",
+       "outcome": "resolved",
+       "error": null
+      },
+      {
+       "label": "sample#2",
+       "outcome": "rejected",
+       "error": "A capture sample is already in progress"
+      }
+     ]
+    }
+   ],
+   "checks": {}
+  },
+  "capture-with-sample": {
+   "groups": [
+    {
+     "name": "capture-with-sample",
+     "calls": [
+      {
+       "label": "capture",
+       "outcome": "resolved",
+       "error": null
+      },
+      {
+       "label": "sample",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    }
+   ],
+   "checks": {}
+  },
+  "rapid-flip": {
+   "groups": [
+    {
+     "name": "rapid-flip",
+     "calls": [
+      {
+       "label": "flip#1",
+       "outcome": "resolved",
+       "error": null
+      },
+      {
+       "label": "flip#2",
+       "outcome": "rejected",
+       "error": "camera preview is not ready"
+      },
+      {
+       "label": "flip#3",
+       "outcome": "rejected",
+       "error": "camera preview is not ready"
+      }
+     ]
+    },
+    {
+     "name": "flip-then-capture",
+     "calls": [
+      {
+       "label": "flip",
+       "outcome": "resolved",
+       "error": null
+      },
+      {
+       "label": "capture",
+       "outcome": "rejected",
+       "error": "camera preview is not ready"
+      }
+     ]
+    }
+   ],
+   "checks": {
+    "isCameraStarted:afterRapidFlip": true
+   }
+  },
+  "stop-during-capture": {
+   "groups": [
+    {
+     "name": "stop-during-capture",
+     "calls": [
+      {
+       "label": "capture",
+       "outcome": "rejected",
+       "error": "camera stopped before the capture completed"
+      },
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    }
+   ],
+   "checks": {
+    "isCameraStarted": false
+   }
+  },
+  "start-stop-race": {
+   "groups": [
+    {
+     "name": "stop-during-start",
+     "calls": [
+      {
+       "label": "start",
+       "outcome": "rejected",
+       "error": "camera stopped before the preview was ready"
+      },
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    }
+   ],
+   "checks": {
+    "isCameraStarted": false
+   }
+  },
+  "start-stop-cycles": {
+   "groups": [
+    {
+     "name": "cycle[0]:start",
+     "calls": [
+      {
+       "label": "start",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[0]:stop",
+     "calls": [
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[1]:start",
+     "calls": [
+      {
+       "label": "start",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[1]:stop",
+     "calls": [
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[2]:start",
+     "calls": [
+      {
+       "label": "start",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[2]:stop",
+     "calls": [
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[3]:start",
+     "calls": [
+      {
+       "label": "start",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[3]:stop",
+     "calls": [
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[4]:start",
+     "calls": [
+      {
+       "label": "start",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    },
+    {
+     "name": "cycle[4]:stop",
+     "calls": [
+      {
+       "label": "stop",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    }
+   ],
+   "checks": {
+    "readyAfterEachStart": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ]
+   }
+  },
+  "no-session": {
+   "groups": [
+    {
+     "name": "not-running",
+     "calls": [
+      {
+       "label": "capture",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "sample",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "flip",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "getSupportedFlashModes",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "setFlashMode",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "setOpacity",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "startRecordVideo",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "stopRecordVideo",
+       "outcome": "rejected",
+       "error": "Camera is not running"
+      },
+      {
+       "label": "stop",
+       "outcome": "rejected",
+       "error": "camera already stopped"
+      },
+      {
+       "label": "isCameraStarted",
+       "outcome": "resolved",
+       "error": null
+      }
+     ]
+    }
+   ],
+   "checks": {}
+  }
+ },
+ "K": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "backgrounded": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "capture:backgrounded": {
+   "outcome": "rejected",
+   "error": "Camera is not running"
+  },
+  "capture:resumed": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "S": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "capture:exif-kept": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "1024x768",
+    "hasExif": true,
+    "orientation": 1
+   }
+  },
+  "captureSample": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1856x1392",
+    "displayed": "1856x1392",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  },
+  "start:exif-stripped": {
+   "outcome": "resolved"
+  },
+  "capture:exif-stripped": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "1024x768",
+    "hasExif": true,
+    "orientation": 1
+   }
+  }
+ },
+ "R": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "stopRecordVideo:nothing-recording": {
+   "outcome": "rejected",
+   "error": "Attempt to invoke virtual method 'void android.media.MediaRecorder.stop()' on a null object reference"
+  },
+  "startRecordVideo": {
+   "outcome": "resolved"
+  },
+  "stopRecordVideo": {
+   "outcome": "resolved",
+   "result": {
+    "videoFilePath": "/data/user/0/ryltsov.alex.camera.preview.demo/cache/videoTmp<_n>.mp4"
+   }
+  },
+  "recording:container": {
+   "isMp4": true,
+   "tracks": [
+    "soun",
+    "vide"
+   ]
+  },
+  "capture:after-recording": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "768x1024",
+    "hasExif": true,
+    "orientation": 6
+   }
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "R2": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "startRecordVideo": {
+   "outcome": "resolved"
+  },
+  "stopRecordVideo": {
+   "outcome": "resolved",
+   "result": {
+    "videoFilePath": "/data/user/0/ryltsov.alex.camera.preview.demo/cache/videoTmp<_n>.mp4"
+   }
+  },
+  "recording:container": {
+   "isMp4": true,
+   "tracks": [
+    "soun",
+    "vide"
+   ]
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "R3": {
+  "second-startRecordVideo": {
+   "outcome": "app-terminated",
+   "appSurvived": false
+  },
+  "capture": {
+   "outcome": "resolved",
+   "appSurvived": true,
+   "stopRecordVideoAfterwards": "resolved",
+   "appSurvivedStopRecordVideo": true
+  },
+  "captureSample": {
+   "outcome": "unsettled",
+   "appSurvived": true,
+   "stopRecordVideoAfterwards": "resolved",
+   "appSurvivedStopRecordVideo": true
+  },
+  "flip": {
+   "outcome": "resolved",
+   "appSurvived": true,
+   "stopRecordVideoAfterwards": "resolved",
+   "appSurvivedStopRecordVideo": true
+  },
+  "stop": {
+   "outcome": "resolved",
+   "appSurvived": true,
+   "stopRecordVideoAfterwards": "rejected: Camera is not running",
+   "appSurvivedStopRecordVideo": true
+  }
+ },
+ "T": {
+  "start:denied": {
+   "outcome": "rejected",
+   "error": "Permission failed: user denied access to camera."
+  },
+  "start:granted": {
+   "outcome": "resolved"
+  },
+  "stop": {
+   "outcome": "resolved"
+  }
+ },
+ "U": {
+  "start": {
+   "outcome": "resolved"
+  },
+  "startRecordVideo": {
+   "appSurvived": false
+  }
+ },
+ "R4": {
+  "captureSample": {
+   "outcome": "resolved",
+   "appSurvived": true,
+   "stopRecordVideoAfterwards": "resolved",
+   "appSurvivedStopRecordVideo": true
+  },
+  "capture": {
+   "outcome": "resolved",
+   "appSurvived": true,
+   "stopRecordVideoAfterwards": "resolved",
+   "appSurvivedStopRecordVideo": true
+  }
+ },
+ "V": {
+  "full-screen:start": {
+   "outcome": "resolved"
+  },
+  "full-screen:capture-landscape": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1024x768",
+    "displayed": "1024x768",
+    "hasExif": true,
+    "orientation": 1
+   }
+  },
+  "full-screen": {
+   "portrait": {
+    "measuredRectDp": {
+     "x": 0,
+     "y": 0,
+     "width": 426.7,
+     "height": 952
+    }
+   },
+   "landscape": {
+    "measuredRectDp": {
+     "x": 0,
+     "y": 0,
+     "width": 952,
+     "height": 426.7
+    }
+   },
+   "portrait-again": {
+    "measuredRectDp": {
+     "x": 0,
+     "y": 0,
+     "width": 426.7,
+     "height": 952
+    }
+   }
+  },
+  "full-screen:stop": {
+   "outcome": "resolved"
+  },
+  "tall:start": {
+   "outcome": "resolved"
+  },
+  "tall:capture-landscape": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "1280x720",
+    "displayed": "1280x720",
+    "hasExif": true,
+    "orientation": 1
+   }
+  },
+  "tall": {
+   "portrait": {
+    "measuredRectDp": {
+     "x": 24,
+     "y": 96,
+     "width": 160,
+     "height": 280
+    }
+   },
+   "landscape": {
+    "measuredRectDp": {
+     "x": 24,
+     "y": 96,
+     "width": 280,
+     "height": 160
+    }
+   },
+   "portrait-again": {
+    "measuredRectDp": {
+     "x": 24,
+     "y": 96,
+     "width": 160,
+     "height": 280
+    }
+   }
+  },
+  "tall:stop": {
+   "outcome": "resolved"
+  },
+  "wide:start": {
+   "outcome": "resolved"
+  },
+  "wide:capture-landscape": {
+   "outcome": "resolved",
+   "result": {
+    "value": "base64"
+   },
+   "image": {
+    "kind": "base64",
+    "format": "jpeg",
+    "encoded": "768x1024",
+    "displayed": "768x1024",
+    "hasExif": false,
+    "orientation": null
+   }
+  },
+  "wide": {
+   "portrait": {
+    "measuredRectDp": {
+     "x": 40,
+     "y": 120,
+     "width": 300,
+     "height": 200
+    }
+   },
+   "landscape": {
+    "measuredRectDp": {
+     "x": 40,
+     "y": 120,
+     "width": 300,
+     "height": 200
+    }
+   },
+   "portrait-again": {
+    "measuredRectDp": {
+     "x": 40,
+     "y": 120,
+     "width": 200,
+     "height": 300
+    }
+   }
+  },
+  "wide:stop": {
+   "outcome": "resolved"
+  }
+ }
+}

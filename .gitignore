@@ -78,4 +78,8 @@ captures
 # Locally published versions
 capacitor-community-camera-preview-*.tgz
 
+# Local development instructions
 CLAUDE.md
+
+# Local review reports and evidence
+/review-artifacts/

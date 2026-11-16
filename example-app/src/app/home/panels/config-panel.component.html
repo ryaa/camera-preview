@@ -1,0 +1,161 @@
+<section class="cph-section">
+  <h2 class="cph-h">Presets <span class="cph-tag">computed from this screen</span></h2>
+  <div class="cph-chips">
+    @for (preset of presets; track preset.id) {
+      <button
+        type="button"
+        class="cph-chip"
+        [class.cph-on]="ui.lastPreset()?.id === preset.id"
+        [attr.data-testid]="'preset-' + preset.id"
+        (click)="usePreset(preset)"
+      >
+        {{ preset.label }}
+      </button>
+    }
+    <button type="button" class="cph-chip cph-chip-quiet" (click)="ui.resetStartForm()">Reset form</button>
+  </div>
+  @if (ui.lastPreset(); as preset) {
+    <p class="cph-hint">{{ preset.description }}</p>
+  }
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Camera <app-support-badge item="start.position" /></h2>
+  <div class="cph-row">
+    <span class="cph-label">position</span>
+    <div class="cph-tri" role="radiogroup" aria-label="position">
+      @for (choice of positionChoices; track choice) {
+        <button
+          type="button"
+          role="radio"
+          class="cph-tri-btn"
+          [class.cph-on]="positionChoice() === choice"
+          [attr.aria-checked]="positionChoice() === choice"
+          [attr.data-testid]="'position-' + choice"
+          (click)="setPosition(choice)"
+        >
+          {{ choice }}
+        </button>
+      }
+    </div>
+  </div>
+  @if (positionChoice() === 'custom') {
+    <label class="cph-text">
+      <span class="cph-label">value sent</span>
+      <input
+        type="text"
+        class="cph-text-input"
+        aria-label="custom position"
+        [value]="ui.startForm().texts.position.value"
+        (input)="setTextValue('position', $event)"
+      />
+    </label>
+  }
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Rectangle <span class="cph-tag">dp on Android · points on iOS</span></h2>
+  <div class="cph-grid">
+    @for (key of numberKeys; track key) {
+      <div class="cph-cell">
+        <app-number-field
+          [label]="key"
+          [field]="ui.startForm().numbers[key]"
+          [testId]="'start-' + key"
+          (fieldChange)="setNumber(key, $event)"
+        />
+        <app-support-badge [item]="'start.' + key" [compact]="true" />
+      </div>
+    }
+  </div>
+  @if (rectSummary(); as summary) {
+    <p class="cph-hint">Requested rectangle: {{ summary }}</p>
+  }
+  <label class="cph-check">
+    <input
+      type="checkbox"
+      [checked]="ui.showGuide()"
+      (change)="ui.showGuide.set(!ui.showGuide())"
+      aria-label="Show the requested rectangle as a guide"
+    />
+    Outline the requested rectangle while the preview runs
+  </label>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Behaviour and output</h2>
+  @for (key of booleanKeys; track key) {
+    <div class="cph-row cph-row-wrap">
+      <span class="cph-label">{{ key }}</span>
+      <app-tri-toggle
+        [label]="key"
+        [value]="ui.startForm().booleans[key]"
+        [testId]="'start-' + key"
+        (valueChange)="setBoolean(key, $event)"
+      />
+      <span class="cph-row-note"><app-support-badge [item]="'start.' + key" [compact]="true" /></span>
+    </div>
+  }
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Web only</h2>
+  <div class="cph-cell">
+    <label class="cph-text">
+      <input
+        type="checkbox"
+        [checked]="ui.startForm().texts.parent.send"
+        (change)="setTextSend('parent', $event)"
+        aria-label="Send parent"
+      />
+      <span class="cph-label">parent</span>
+      <input
+        type="text"
+        class="cph-text-input"
+        aria-label="parent element id"
+        [value]="ui.startForm().texts.parent.value"
+        (input)="setTextValue('parent', $event)"
+      />
+    </label>
+    <app-support-badge item="start.parent" [compact]="true" />
+  </div>
+  <div class="cph-cell">
+    <label class="cph-text">
+      <input
+        type="checkbox"
+        [checked]="ui.startForm().texts.className.send"
+        (change)="setTextSend('className', $event)"
+        aria-label="Send className"
+      />
+      <span class="cph-label">className</span>
+      <input
+        type="text"
+        class="cph-text-input"
+        aria-label="class name"
+        [value]="ui.startForm().texts.className.value"
+        (input)="setTextValue('className', $event)"
+      />
+    </label>
+    <app-support-badge item="start.className" [compact]="true" />
+  </div>
+</section>
+
+<section class="cph-section">
+  <h2 class="cph-h">Options that will be sent <span class="cph-tag">applies at start()</span></h2>
+  <pre class="cph-json" data-testid="start-options-json">{{ optionsJson() }}</pre>
+  @if (ui.formCoversControls()) {
+    <p class="cph-warn" role="alert">
+      With toBack not true, this preview covers the page and leaves no room for the controls. It will
+      stop by itself after {{ autoStopSeconds }} s; on Android the back button also stops it.
+    </p>
+  }
+  <button
+    type="button"
+    class="cph-btn cph-btn-primary cph-btn-block"
+    data-testid="config-start"
+    [disabled]="harness.isPending('start') || harness.isPending('stop')"
+    (click)="start()"
+  >
+    {{ harness.sessionActive() ? 'Restart with these options' : 'Start with these options' }}
+  </button>
+</section>

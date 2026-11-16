@@ -1,69 +1,48 @@
+// Page-level pieces of the harness shell. Everything shared by the panels lives in
+// src/theme/harness.scss, which also defines the --cph-* tokens used here.
+
 :host {
-  ion-content {
-    &.content-camera-preview {
-      --background: transparent;
-    }
+  // The native preview can sit behind the WebView, so the content area never paints a background;
+  // the shell paints one itself while nothing is running.
+  ion-content.cph-content {
+    --background: transparent;
   }
 
-  .start-card {
-    ion-card-content {
-      padding: 10px;
-    }
-
-    .action-button {
-      width: 100%;
-    }
-  }
-
-  .partial-mode {
-    margin: 20px 0 10px;
-    text-align: center;
-  }
-
-  .camera-status {
+  // Zero-size element whose padding resolves the top safe-area inset so it can be measured.
+  .cph-probe {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    left: 16px;
-    z-index: 10;
-
-    padding: 10px 12px;
-    color: white;
-    font-size: 14px;
-    text-align: center;
+    width: 0;
+    height: 0;
+    padding-top: var(--cph-safe-top);
+    visibility: hidden;
     pointer-events: none;
-    background: rgb(0 0 0 / 65%);
-    border-radius: 6px;
   }
 
-  .camera-controls {
+  // Automation only: one flat colour behind a preview that sits in front of the page.
+  .cph-backdrop {
     position: absolute;
-    right: 12px;
-    bottom: max(16px, env(safe-area-inset-bottom));
-    left: 12px;
-    z-index: 10;
-
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 8px;
-
-    ion-button {
-      margin: 0;
-    }
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
   }
 
-  .captured-photo {
+  // Outline of the rectangle the start() options ask for.
+  .cph-guide {
     position: absolute;
-    top: 88px;
-    right: 16px;
-    z-index: 10;
+    z-index: 1;
+    box-sizing: border-box;
+    pointer-events: none;
+    border: 2px dashed #ffd400;
+    outline: 1px solid rgb(0 0 0 / 60%);
+  }
 
-    width: 120px;
-    height: 160px;
-    object-fit: cover;
-    background: black;
-    border: 2px solid white;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
+  .cph-guide-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px 6px;
+    color: #000;
+    font-size: 11px;
+    background: #ffd400;
   }
 }

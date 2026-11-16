@@ -1,0 +1,745 @@
+/*
+ * Styles for the camera-preview test harness (every class is prefixed `cph-`).
+ *
+ * They are global rather than per component on purpose: the panels share one small vocabulary of
+ * rows, chips, tables and buttons, and the production build caps each component stylesheet at 4 kB.
+ *
+ * While a preview runs the page itself is transparent (see `html.camera-preview-active` in
+ * global.scss) so a preview behind the WebView shows through; the harness surfaces stay opaque
+ * enough to read over a moving camera image.
+ */
+
+:root {
+  --cph-page: #f4f5f8;
+  --cph-surface: rgb(255 255 255 / 94%);
+  --cph-surface-solid: #fff;
+  --cph-text: #14161a;
+  --cph-muted: #5b6270;
+  --cph-line: rgb(20 22 26 / 16%);
+  --cph-accent: #1f5fd1;
+  --cph-accent-text: #fff;
+  --cph-danger: #b3261e;
+  --cph-warn-bg: #fff1c2;
+  --cph-warn-text: #5c4300;
+  --cph-ok: #1b7f3b;
+  --cph-code: rgb(20 22 26 / 6%);
+  // Insets, in order of preference: the --safe-area-inset-* variables Capacitor's SystemBars plugin
+  // publishes on Android 15+, the WebView's own env() values (iOS, browsers, current Android
+  // WebViews), and a fallback the page sets for an edge-to-edge Android WebView that reports neither.
+  --cph-safe-top: max(var(--safe-area-inset-top, env(safe-area-inset-top, 0px)), var(--cph-fallback-top, 0px));
+  --cph-safe-bottom: max(
+    var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)),
+    var(--cph-fallback-bottom, 0px)
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cph-page: #101114;
+    --cph-surface: rgb(24 26 31 / 94%);
+    --cph-surface-solid: #181a1f;
+    --cph-text: #eef0f4;
+    --cph-muted: #a4abb8;
+    --cph-line: rgb(238 240 244 / 20%);
+    --cph-accent: #7aa7ff;
+    --cph-accent-text: #0b1220;
+    --cph-danger: #ff8a80;
+    --cph-warn-bg: #4a3a00;
+    --cph-warn-text: #ffe9a6;
+    --cph-ok: #6fd08c;
+    --cph-code: rgb(238 240 244 / 10%);
+  }
+}
+
+/* Web only: the plugin appends its <video> here, behind the harness. The element is created by the
+   plugin, so it cannot be reached from a component stylesheet. */
+.cph-web-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+
+  video {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+/* ---------------------------------------------------------------- shell */
+
+.cph-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  color: var(--cph-text);
+  font-size: 14px;
+  line-height: 1.35;
+  background: var(--cph-page);
+}
+
+.cph-shell-live {
+  background: transparent;
+}
+
+/* Constrained to the band above or below a preview that sits in front of the page. */
+.cph-shell-band {
+  bottom: auto;
+}
+
+.cph-shell-peek,
+.cph-shell-hidden {
+  display: none;
+}
+
+.cph-top {
+  flex: 0 0 auto;
+  padding: calc(var(--cph-safe-top) + 6px) 10px 0;
+  background: var(--cph-surface);
+  border-bottom: 1px solid var(--cph-line);
+}
+
+.cph-shell-band .cph-top {
+  padding-top: 6px;
+}
+
+.cph-titlebar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cph-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cph-spacer {
+  flex: 1 1 auto;
+}
+
+.cph-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: center;
+  padding: 6px 0;
+  color: var(--cph-muted);
+  font-size: 12px;
+}
+
+.cph-status-last {
+  flex: 1 1 100%;
+  overflow-wrap: anywhere;
+}
+
+.cph-status-warn {
+  padding: 0 6px;
+  color: var(--cph-warn-text);
+  background: var(--cph-warn-bg);
+  border-radius: 4px;
+}
+
+.cph-state {
+  padding: 1px 8px;
+  color: var(--cph-accent-text);
+  font-weight: 600;
+  background: var(--cph-muted);
+  border-radius: 10px;
+
+  &[data-state='running'] {
+    background: var(--cph-ok);
+  }
+
+  &[data-state='starting'],
+  &[data-state='stopping'] {
+    background: var(--cph-accent);
+  }
+
+  &[data-state='failed'] {
+    background: var(--cph-danger);
+  }
+}
+
+.cph-tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+}
+
+.cph-tab {
+  flex: 1 0 auto;
+  min-height: 40px;
+  padding: 6px 10px;
+  color: var(--cph-muted);
+  font: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+
+  &.cph-on {
+    color: var(--cph-text);
+    font-weight: 600;
+    border-bottom-color: var(--cph-accent);
+  }
+}
+
+.cph-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 8px 10px 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* With a full-screen preview behind the page, keep the middle of the screen free to look at it. */
+.cph-shell-live:not(.cph-shell-band) .cph-panel {
+  flex: 0 1 auto;
+  max-height: 46%;
+  margin-top: auto;
+  background: var(--cph-surface);
+  border-top: 1px solid var(--cph-line);
+}
+
+.cph-shell-live.cph-shell-band .cph-panel {
+  background: var(--cph-surface);
+}
+
+.cph-dock {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  padding: 8px 10px calc(var(--cph-safe-bottom) + 8px);
+  background: var(--cph-surface-solid);
+  border-top: 1px solid var(--cph-line);
+
+  // Five labels have to fit a 360 px wide phone without being cut.
+  .cph-btn {
+    padding: 6px 2px;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+  }
+}
+
+.cph-peek-chip {
+  position: absolute;
+  top: calc(var(--cph-safe-top) + 8px);
+  left: 8px;
+  z-index: 3;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: #fff;
+  font: inherit;
+  background: rgb(0 0 0 / 72%);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-radius: 20px;
+}
+
+/* ---------------------------------------------------------------- building blocks */
+
+.cph-section {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cph-line);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.cph-h {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cph-tag {
+  padding: 1px 6px;
+  color: var(--cph-muted);
+  font-size: 11px;
+  font-weight: 400;
+  border: 1px solid var(--cph-line);
+  border-radius: 4px;
+}
+
+.cph-tag-bad {
+  color: var(--cph-danger);
+  border-color: var(--cph-danger);
+}
+
+.cph-hint {
+  margin: 6px 0;
+  color: var(--cph-muted);
+  font-size: 12px;
+}
+
+.cph-warn {
+  margin: 8px 0;
+  padding: 8px 10px;
+  color: var(--cph-warn-text);
+  font-size: 13px;
+  background: var(--cph-warn-bg);
+  border-radius: 6px;
+}
+
+.cph-btn {
+  min-height: 40px;
+  padding: 6px 10px;
+  overflow: hidden;
+  color: var(--cph-text);
+  font: inherit;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--cph-surface-solid);
+  border: 1px solid var(--cph-line);
+  border-radius: 6px;
+
+  &:disabled {
+    opacity: 0.45;
+  }
+}
+
+.cph-btn-primary {
+  color: var(--cph-accent-text);
+  background: var(--cph-accent);
+  border-color: var(--cph-accent);
+}
+
+.cph-btn-danger {
+  color: var(--cph-danger);
+  border-color: var(--cph-danger);
+}
+
+.cph-btn-small {
+  min-height: 32px;
+  padding: 2px 10px;
+  font-weight: 400;
+}
+
+.cph-btn-block {
+  width: 100%;
+}
+
+.cph-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cph-chip {
+  min-height: 36px;
+  padding: 4px 12px;
+  color: var(--cph-text);
+  font: inherit;
+  background: var(--cph-surface-solid);
+  border: 1px solid var(--cph-line);
+  border-radius: 18px;
+
+  &.cph-on {
+    color: var(--cph-accent-text);
+    background: var(--cph-accent);
+    border-color: var(--cph-accent);
+  }
+}
+
+.cph-chip-quiet {
+  color: var(--cph-muted);
+  border-style: dashed;
+}
+
+.cph-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.cph-row-wrap {
+  flex-wrap: wrap;
+}
+
+.cph-row-note {
+  flex: 1 1 100%;
+}
+
+.cph-label {
+  flex: 0 0 auto;
+  min-width: 88px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.cph-row > .cph-label {
+  flex: 1 1 auto;
+}
+
+.cph-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 6px 14px;
+}
+
+.cph-cell {
+  min-width: 0;
+}
+
+.cph-tri {
+  display: inline-flex;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--cph-line);
+  border-radius: 6px;
+}
+
+.cph-tri-btn {
+  min-width: 52px;
+  min-height: 34px;
+  padding: 2px 8px;
+  color: var(--cph-muted);
+  font: inherit;
+  font-size: 12px;
+  background: var(--cph-surface-solid);
+  border: 0;
+  border-right: 1px solid var(--cph-line);
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  &.cph-on {
+    color: var(--cph-accent-text);
+    font-weight: 600;
+    background: var(--cph-accent);
+  }
+}
+
+.cph-num,
+.cph-text {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 38px;
+}
+
+.cph-num-off .cph-num-input {
+  color: var(--cph-muted);
+}
+
+.cph-num-send,
+.cph-text input[type='checkbox'],
+.cph-check input[type='checkbox'] {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--cph-accent);
+}
+
+.cph-num-label {
+  flex: 1 1 auto;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.cph-num-input,
+.cph-text-input {
+  flex: 0 1 110px;
+  min-width: 0;
+  min-height: 34px;
+  padding: 2px 8px;
+  color: var(--cph-text);
+  font: inherit;
+  background: var(--cph-surface-solid);
+  border: 1px solid var(--cph-line);
+  border-radius: 6px;
+}
+
+.cph-text-input {
+  flex: 1 1 110px;
+}
+
+.cph-check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.cph-range {
+  width: 100%;
+  accent-color: var(--cph-accent);
+}
+
+.cph-support {
+  display: inline-block;
+  min-width: 16px;
+  font-weight: 700;
+  text-align: center;
+
+  &[data-level='supported'] {
+    color: var(--cph-ok);
+  }
+
+  &[data-level='partial'] {
+    color: var(--cph-warn-text);
+  }
+
+  &[data-level='unsupported'] {
+    color: var(--cph-danger);
+  }
+}
+
+.cph-support-note {
+  color: var(--cph-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.cph-json,
+.cph-inline-json,
+.cph-export {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12px;
+  background: var(--cph-code);
+  border-radius: 6px;
+}
+
+.cph-json {
+  margin: 6px 0;
+  padding: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.cph-inline-json {
+  flex: 1 1 160px;
+  padding: 6px 8px;
+  overflow-wrap: anywhere;
+}
+
+.cph-export {
+  box-sizing: border-box;
+  width: 100%;
+  height: 160px;
+  margin: 6px 0;
+  padding: 8px;
+  color: var(--cph-text);
+  border: 1px solid var(--cph-line);
+}
+
+.cph-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.cph-actions-start {
+  justify-content: flex-start;
+}
+
+.cph-steps {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: var(--cph-muted);
+  font-size: 13px;
+
+  li {
+    margin-bottom: 6px;
+  }
+}
+
+/* ---------------------------------------------------------------- results */
+
+.cph-viewer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 240px;
+  overflow: hidden;
+  border: 1px solid var(--cph-line);
+  // A checkerboard shows exactly where the image ends, so letterboxing is not mistaken for content.
+  background:
+    conic-gradient(rgb(128 128 128 / 28%) 25%, transparent 0 50%, rgb(128 128 128 / 28%) 0 75%, transparent 0) 0 0 /
+    16px 16px;
+}
+
+.cph-viewer-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.cph-viewer-actual {
+  display: block;
+  overflow: auto;
+
+  .cph-viewer-img {
+    max-width: none;
+    max-height: none;
+  }
+}
+
+.cph-video {
+  width: 100%;
+  max-height: 240px;
+  background: #000;
+}
+
+.cph-facts {
+  margin: 8px 0 0;
+}
+
+.cph-fact {
+  display: grid;
+  grid-template-columns: minmax(120px, 38%) 1fr;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--cph-line);
+
+  dt {
+    color: var(--cph-muted);
+    font-size: 12px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.cph-fact-warn dd {
+  color: var(--cph-danger);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- log, lab, coverage */
+
+.cph-log {
+  margin: 8px 0 0;
+  padding: 0;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 11px;
+  list-style: none;
+}
+
+.cph-log-line {
+  padding: 3px 0;
+  border-bottom: 1px solid var(--cph-line);
+  overflow-wrap: anywhere;
+
+  &[data-kind='rejected'],
+  &[data-kind='unsettled'] {
+    color: var(--cph-danger);
+  }
+
+  &[data-kind='readiness'],
+  &[data-kind='lifecycle'],
+  &[data-kind='note'] {
+    color: var(--cph-muted);
+  }
+}
+
+.cph-lab-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px;
+}
+
+.cph-lab-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 48px;
+  padding: 6px 10px;
+  color: var(--cph-text);
+  font: inherit;
+  text-align: left;
+  background: var(--cph-surface-solid);
+  border: 1px solid var(--cph-line);
+  border-radius: 6px;
+
+  span {
+    color: var(--cph-muted);
+    font-size: 12px;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+  }
+}
+
+.cph-table {
+  width: 100%;
+  margin: 6px 0 10px;
+  font-size: 12px;
+  border-collapse: collapse;
+
+  caption {
+    padding: 4px 0;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  th,
+  td {
+    padding: 4px 6px 4px 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--cph-line);
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    color: var(--cph-muted);
+    font-weight: 400;
+  }
+
+  tr[data-outcome='unsettled'] td {
+    color: var(--cph-danger);
+    font-weight: 600;
+  }
+}
+
+.cph-coverage {
+  .cph-current {
+    background: var(--cph-code);
+  }
+
+  .cph-done td:first-child {
+    color: var(--cph-ok);
+    font-weight: 700;
+  }
+}
+
+.cph-cov-how,
+.cph-cov-note {
+  display: block;
+  color: var(--cph-muted);
+  font-size: 11px;
+}
+
+.cph-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
